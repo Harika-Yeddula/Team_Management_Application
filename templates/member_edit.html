@@ -1,0 +1,54 @@
+{% load static %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/semantic.min.css' %}" xmlns="">
+<script src="{% static 'JS/semantic.min.js' %}"></script>
+
+<head>
+    <div class="ui item menu" style="background-color: #0d71bb">
+        <a class="item"><h1 style="color: white">Edit Team Member</h1></a>
+    </div>
+</head>
+<body style="padding: 10px 50px 50px 50px">
+  <form class="ui form" METHOD="post">
+    {% csrf_token %}
+  <div class="field">
+    <label>First Name</label>
+    <input type="text" name="first_name" placeholder="First Name" id="first_name" value="{{ member.first_name }}" required>
+  </div>
+  <div class="field">
+    <label>Last Name</label>
+    <input type="text" name="last_name" placeholder="Last Name" id="last_name" value="{{ member.last_name }}" required>
+  </div>
+    <div class="field">
+    <label>Phone Number</label>
+    <input type="number" name="phone_number" placeholder="Phone Number" id="phone_number" value="{{ member.phone_number}}" required>
+  </div>
+    <div class="field">
+    <label>Email</label>
+    <input type="email" name="email" placeholder="email" id="email" value="{{ member.email }}" required>
+  </div>
+      <div class="radiolist grouped fields">
+    <label for="role">Role</label>
+      <div class="ui radio checkbox field">
+        <input type="radio" name="role" id="General" value="General" tabindex="0" class="hidden">
+        <label for="General">Regular - Cant delete members</label>
+      </div>
+      <div class="ui radio checkbox field">
+        <input type="radio" name="role" id="Admin" value="Admin" tabindex="0" class="hidden">
+        <label for="Admin" >Admin - Can delete members</label>
+      </div>
+          <script>
+          document.getElementById("{{ member.role }}").checked = true;
+      </script>
+   </div>
+      <button class="ui blue basic button" type="submit">Submit</button>
+  {% if member.role == "Admin" %}
+      <button class="ui blue basic button">
+          <a href="{% url 'member_delete' member.id %}">Delete Member</a>
+      </button>
+  {% endif %}
+</form>
+      </div>
+</body>
+
+

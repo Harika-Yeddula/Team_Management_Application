@@ -1,0 +1,41 @@
+{% load static %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/semantic.min.css' %}">
+<script src="{% static 'JS/semantic.min.js' %}"></script>
+
+<head>
+    <div class="ui one item menu" style="background-color: #0d71bb">
+        <a class="item"><h1 style="color: white">Team Management Application</h1></a>
+    </div>
+</head>
+
+<body style="padding: 10px 50px 50px 50px">
+<div class="ui segments rasied">
+      <div class="ui segment">
+         <h2>You have {{ members.count }} Team Members</h2>
+      </div>
+      <div class="ui segment">
+         <a href="{% url 'member_add' %}">
+            <button class="ui blue basic button" style="align-items: flex-end">Add a Team member</button>
+         </a>
+      </div>
+</div>
+    {% for member in members %}
+        <div class="ui items raised segment">
+            <div class="content">
+                <h3>
+                <a class="header" href="{% url 'member_edit' member.id %}">{{ member.first_name }} {{ member.last_name }}</a>
+                {% if member.role == "Admin" %}
+                  <span>({{ member.role }})</span>
+                {% endif %}
+                </h3>
+                <div class="meta">
+                    <span>{{ member.phone_number }}</span>
+                </div>
+                <div class="meta">
+                    <span>{{ member.email }}</span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</body>
